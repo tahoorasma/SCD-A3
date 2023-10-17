@@ -1,0 +1,8 @@
+Java Tutorials, John, 2010, 17, 1190
+C++ Tutorials, Albert, 2012, 28, 1250
+Pythgon Tutorials, Albert, 2015, 9, 1380
+Broken Verses, Kamila Shamsie, 2013, 5, 790
+It Ends With Us, Colleen Hoover, 2016, 19, 1100
+The Forty Rules of Love, Elif Shafak, 2009, 27, 880
+A Thousand Splendid Suns, Khaled Hosseini, 2007, 34, 1470
+Before the Coffee Gets Cold, Toshikazu Kawaguchi, 2015, 23, 950
