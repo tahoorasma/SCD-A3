@@ -155,6 +155,7 @@ public class AddItem extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        ViewAll.saveFile();
         ViewAll h = new ViewAll();
         h.setVisible(true);
         this.setVisible(false);
@@ -169,7 +170,6 @@ public class AddItem extends javax.swing.JFrame {
         String book = titleTF.getText()+", "+authorTF.getText()+", "+yearTF.getText()+", "+popularityCount+", "+priceTF.getText();
         ViewAll.Array[ViewAll.Index] = book;
         ViewAll.Index++;
-        ViewAll.saveFile();
         JOptionPane.showMessageDialog(null, "A new book \""+titleTF.getText()+" by "+authorTF.getText()+"("+yearTF.getText()+")\" has been added to data successfully!", "Message", JOptionPane.INFORMATION_MESSAGE);
         System.out.println("A new book \""+titleTF.getText()+" by "+authorTF.getText()+"("+yearTF.getText()+")\" has been added to data!");
     }//GEN-LAST:event_addButtonActionPerformed

@@ -18,6 +18,7 @@ public class ViewAll extends javax.swing.JFrame {
     public static int rowCount;
     public static String [] Array = new String[100];
     public static int Index = 0;
+    public static int ID = 0;
     private String title;
     private String author;
     private int year;
@@ -45,6 +46,7 @@ public class ViewAll extends javax.swing.JFrame {
         }
         }
         public static void saveFile(){
+        ID = 0;
         String filePath = "data.txt";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write("");
@@ -108,12 +110,13 @@ public class ViewAll extends javax.swing.JFrame {
         for (int i = 0; i<array.length; i++){
             String words = array[i]; 
             String [] arr = words.split(",");
-            rows[0] = arr[0];
-            rows[1] = arr[1];
-            rows[2] = arr[2];
-            rows[3] = arr[3];
-            rows[4] = arr[4];
-            int readBookColumnIndex = 5;
+            rows[0] = ++ID;
+            rows[1] = arr[0];
+            rows[2] = arr[1];
+            rows[3] = arr[2];
+            rows[4] = arr[3];
+            rows[5] = arr[4];
+            int readBookColumnIndex = 6;
             Books.getColumnModel().getColumn(readBookColumnIndex).setCellRenderer(new ButtonRenderer());
             Read rd = new Read();
             Books.getColumnModel().getColumn(readBookColumnIndex).setCellEditor(new ButtonEditor(rd));
@@ -129,7 +132,7 @@ public class ViewAll extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Books = new javax.swing.JTable();
-        Hot_Picks = new javax.swing.JButton();
+        View_Popularity = new javax.swing.JButton();
         ViewByID = new javax.swing.JButton();
         Delete = new javax.swing.JButton();
         Edit = new javax.swing.JButton();
@@ -140,6 +143,7 @@ public class ViewAll extends javax.swing.JFrame {
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(136, 185, 138));
+        jPanel1.setPreferredSize(new java.awt.Dimension(640, 420));
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 51, 51), new java.awt.Color(0, 102, 102)));
 
@@ -148,25 +152,38 @@ public class ViewAll extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Title", "Author", "Year", "Popularity count", "Price", "Read Book"
+                "ID", "Title", "Author", "Year", "Popularity Count", "Price", "Read Book"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
-        });
-        Books.setToolTipText("Borrow");
-        jScrollPane1.setViewportView(Books);
 
-        Hot_Picks.setBackground(new java.awt.Color(216, 252, 230));
-        Hot_Picks.setLabel("Hot Picks!");
-        Hot_Picks.addActionListener(new java.awt.event.ActionListener() {
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        Books.setToolTipText("Read");
+        Books.setAutoscrolls(false);
+        Books.setMaximumSize(new java.awt.Dimension(250, 0));
+        jScrollPane1.setViewportView(Books);
+        if (Books.getColumnModel().getColumnCount() > 0) {
+            Books.getColumnModel().getColumn(0).setResizable(false);
+            Books.getColumnModel().getColumn(0).setPreferredWidth(0);
+        }
+
+        View_Popularity.setBackground(new java.awt.Color(216, 252, 230));
+        View_Popularity.setText("View Popularity");
+        View_Popularity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Hot_PicksActionPerformed(evt);
+                View_PopularityActionPerformed(evt);
             }
         });
 
@@ -214,7 +231,7 @@ public class ViewAll extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Hot_Picks, javax.swing.GroupLayout.PREFERRED_SIZE, 546, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(View_Popularity, javax.swing.GroupLayout.PREFERRED_SIZE, 546, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -229,9 +246,9 @@ public class ViewAll extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
-                .addComponent(Hot_Picks)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addComponent(View_Popularity)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Edit)
@@ -249,18 +266,18 @@ public class ViewAll extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void Hot_PicksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Hot_PicksActionPerformed
-        HotPicks hp = new HotPicks();
+    private void View_PopularityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_View_PopularityActionPerformed
+        ViewPopularity hp = new ViewPopularity();
         hp.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_Hot_PicksActionPerformed
+    }//GEN-LAST:event_View_PopularityActionPerformed
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         AddItem add = new AddItem();
@@ -323,8 +340,8 @@ public class ViewAll extends javax.swing.JFrame {
     private javax.swing.JTable Books;
     private javax.swing.JButton Delete;
     private javax.swing.JButton Edit;
-    private javax.swing.JButton Hot_Picks;
     private javax.swing.JButton ViewByID;
+    private javax.swing.JButton View_Popularity;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables

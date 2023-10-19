@@ -96,6 +96,7 @@ public class Read extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        ViewAll.saveFile();
         ViewAll h = new ViewAll();
         h.setVisible(true);
         this.setVisible(false);
