@@ -76,6 +76,7 @@ public class ViewByID extends javax.swing.JFrame {
         Label.setForeground(new java.awt.Color(0, 51, 51));
         Label.setText("Enter ID to view book details");
 
+        IDtf.setBackground(new java.awt.Color(204, 204, 255));
         IDtf.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         IDtf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
