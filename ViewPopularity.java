@@ -1,59 +1,67 @@
 package com.mycompany.scd_assignment_3.SCD_A3;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Graphics;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-public class barChart extends JPanel{
-        private int[] data; // Data values for the bars
+import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.border.Border;
 
-    public barChart() {
+class barChart extends JPanel{
+    private final int[] data;
+    public barChart(int [] data) {
+        setOpaque(false); 
+        setPreferredSize(new Dimension(500, 300));
+        this.data = data;
+    }
+    @Override
+protected void paintComponent(Graphics g) {
+    System.out.println("Hello");
+    super.paintComponent(g);
+    int barWidth = 50;
+    int startX = 50;
+    int startY = getHeight() - 50;
+    int maxDataValue = 0;
+    for (int value : data) {
+        maxDataValue = Math.max(maxDataValue, value);
+    }
+    int scale = 10;
+    for (int i = 0; i < data.length; i++) {
+        int barHeight = data[i] * scale;
+        barHeight = Math.max(barHeight, 10);
+        int x = startX + i * (barWidth + 10);
+        int y = startY - barHeight;
+        g.setColor(Color.blue);
+        g.fillRect(x, y, barWidth, barHeight);
+        g.setColor(Color.black);
+        g.drawString(String.valueOf(data[i]), x + barWidth / 2, y - 5);
+    }
+    }
+}
+public class ViewPopularity extends javax.swing.JFrame {
+    public ViewPopularity() {
+        initComponents();
+        getContentPane().setBackground(new Color(250, 250, 250));
+        int [] data = {15,20,10,25};/*new int[ViewAll.Index];
         for (int i = 0; i < ViewAll.Index; i++){
             String words = ViewAll.Array[i]; 
             String [] arr = words.split(",");
             arr[3] = arr[3].trim();
-            this.data[i] = Integer.parseInt(arr[3]);
-        }
+            data[i] = Integer.parseInt(arr[3]);
+            System.out.println(i+": "+data[i]);
+        }*/
+        barChart chart = new barChart(data);
+        JPanel chartPanel = new JPanel(new BorderLayout());
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
+        chartPanel.setBorder(border);
+        chartPanel.setOpaque(false);
+        chartPanel.setVisible(true);
+        chartPanel.add(chart, BorderLayout.CENTER);
+        getContentPane().add(chartPanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+        setVisible(true);
     }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        int barWidth = 50;
-        int barHeightMultiplier = 10;
-        int startX = 50;
-        int startY = getHeight() - 50;
-
-        // Draw bars based on the data values
-        for (int i = 0; i < data.length; i++) {
-            int barHeight = data[i] * barHeightMultiplier;
-            int x = startX + i * (barWidth + 10);
-            int y = startY - barHeight;
-            
-            // Draw the bar
-            g.setColor(Color.blue);
-            g.fillRect(x, y, barWidth, barHeight);
-
-            // Draw the label for the bar
-            g.setColor(Color.black);
-            g.drawString(String.valueOf(data[i]), x + barWidth / 2, y - 5);
-        }
-    }
-    }
-
-public class ViewPopularity extends javax.swing.JFrame {
-
-    public ViewPopularity() {
-        initComponents();
-        getContentPane().setBackground(new Color(250, 250, 250));
-        JFrame fr = new JFrame("Frame");
-        barChart chart = new barChart();
-        fr.add(chart);
-        //showChart();
-    }
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

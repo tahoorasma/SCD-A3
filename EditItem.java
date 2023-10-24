@@ -1,4 +1,8 @@
 package com.mycompany.scd_assignment_3.SCD_A3;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 
 public class EditItem extends javax.swing.JFrame {
@@ -217,6 +221,22 @@ public class EditItem extends javax.swing.JFrame {
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         String book = titleTF.getText()+", "+authorTF.getText()+", "+yearTF.getText()+", "+popularityCount+", "+priceTF.getText();
         ViewAll.Array[editID] = book;
+        /*String details = titleTF.getText()+" by "+authorTF.getText()+"("+yearTF.getText()+")\n\n";
+        String filePath = (editID+1)+".txt";
+        File file = new File(filePath);
+        if (file.exists()) {
+            if (file.delete()) {
+                System.out.println("File deleted successfully.");
+            } else {System.out.println("Failed to delete file");}
+        } else {System.out.println("Failed to open file");}
+        String filename = (editID+1)+".txt";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
+        writer.write(details);
+        writer.newLine();
+        System.out.println("File created");
+        } catch (IOException e) {
+        System.err.println("Error creating file: " + e.getMessage());
+        }*/
         JOptionPane.showMessageDialog(null, "Book \""+titleTF.getText()+" by "+authorTF.getText()+"("+yearTF.getText()+")\" has been edited successfully!", "Message", JOptionPane.INFORMATION_MESSAGE);
         System.out.println("Book \""+titleTF.getText()+" by "+authorTF.getText()+"("+yearTF.getText()+")\" has been edited");
     }//GEN-LAST:event_editButtonActionPerformed

@@ -1,4 +1,7 @@
 package com.mycompany.scd_assignment_3.SCD_A3;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 public class AddItem extends javax.swing.JFrame {
     public AddItem() {
@@ -168,8 +171,17 @@ public class AddItem extends javax.swing.JFrame {
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         int popularityCount = 0;
         String book = titleTF.getText()+", "+authorTF.getText()+", "+yearTF.getText()+", "+popularityCount+", "+priceTF.getText();
+        String details = titleTF.getText()+" by "+authorTF.getText()+"("+yearTF.getText()+")\n\n";
         ViewAll.Array[ViewAll.Index] = book;
         ViewAll.Index++;
+        String filename = (ViewAll.ID+1)+".txt";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
+        writer.write(details);
+        writer.newLine();
+        System.out.println("File created");
+        } catch (IOException e) {
+        System.err.println("Error creating file: " + e.getMessage());
+        }
         JOptionPane.showMessageDialog(null, "A new book \""+titleTF.getText()+" by "+authorTF.getText()+"("+yearTF.getText()+")\" has been added to data successfully!", "Message", JOptionPane.INFORMATION_MESSAGE);
         System.out.println("A new book \""+titleTF.getText()+" by "+authorTF.getText()+"("+yearTF.getText()+")\" has been added to data!");
     }//GEN-LAST:event_addButtonActionPerformed

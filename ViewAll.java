@@ -5,7 +5,6 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -19,14 +18,8 @@ public class ViewAll extends javax.swing.JFrame {
     public static String [] Array = new String[100];
     public static int Index = 0;
     public static int ID = 0;
-    private String title;
-    private String author;
-    private int year;
-    private int popularityCount;
-    private int price;
     public ViewAll() {
         initComponents();
-        //clearBooksTable();
         loader();
         addRowToJTable();
     }
@@ -57,47 +50,56 @@ public class ViewAll extends javax.swing.JFrame {
             }
             System.out.println("File updated.");
         } catch (IOException e) {
-            e.printStackTrace();
             System.err.println("An error occurred while writing to the file.");}
         }
     class ButtonEditor extends AbstractCellEditor implements TableCellEditor {
-    private JButton button;
-    private JFrame otherFrame;
-    public ButtonEditor(JFrame otherFrame) {
+    private final JButton button;
+    private int id;
+    public ButtonEditor() {
         button = new JButton("Read Now");
-        this.otherFrame = otherFrame;
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                otherFrame.setVisible(true);
-                setVisible(false);
-                fireEditingStopped();
-            }
+        button.addActionListener((ActionEvent e) -> {
+            Read rd = new Read(id);
+            rd.setVisible(true);
+            setVisible(false);
+            updatePopCount(id-1);
+            fireEditingStopped();
         });
     }
+    public void updatePopCount(int id){
+        String words = ViewAll.Array[id]; 
+        String [] arr = words.split(",");
+        arr[0] = arr[0].trim();
+        String title = arr[0];
+        arr[1] = arr[1].trim();
+        String author = arr[1];
+        arr[2] = arr[2].trim();
+        String year = arr[2];
+        arr[3] = arr[3].trim();
+        int popularityCount = Integer.parseInt(arr[3]) + 1;
+        arr[4] = arr[4].trim();
+        String price = arr[4];
+        String book = title+", "+author+", "+year+", "+popularityCount+", "+price;
+        ViewAll.Array[id] = book;
+    }
+    @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+        id = row+1;
         return button;
     }
+    @Override
     public Object getCellEditorValue() {
         return null;
     }
 }
     class ButtonRenderer extends DefaultTableCellRenderer {
-    private JButton button;
+    private final JButton button;
     public ButtonRenderer() {
         button = new JButton("Read Now");
     }
+    @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         return button;
     }
-    }
-    private void clearBooksTable(){
-        DefaultTableModel model = (DefaultTableModel) Books.getModel();
-        System.out.println(rowCount);
-        for (int i = rowCount; i >= 1; i--){
-            model.removeRow(rowCount);
-            System.out.println("i: "+i);
-        }
     }
     private void addRowToJTable(){
         rowCount = 0;
@@ -118,8 +120,7 @@ public class ViewAll extends javax.swing.JFrame {
             rows[5] = arr[4];
             int readBookColumnIndex = 6;
             Books.getColumnModel().getColumn(readBookColumnIndex).setCellRenderer(new ButtonRenderer());
-            Read rd = new Read();
-            Books.getColumnModel().getColumn(readBookColumnIndex).setCellEditor(new ButtonEditor(rd));
+            Books.getColumnModel().getColumn(readBookColumnIndex).setCellEditor(new ButtonEditor());
             model.addRow(rows);
             rowCount++;
         }        
