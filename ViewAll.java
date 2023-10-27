@@ -36,9 +36,10 @@ public class ViewAll extends javax.swing.JFrame {
             System.out.println("\nLoaded items from file \""+fileName+"\"");
         } catch (IOException e) {
             System.out.println("Loading error");
+            JOptionPane.showMessageDialog(null, "Loading error", "Error", JOptionPane.ERROR_MESSAGE);
         }
         }
-        public static void saveFile(){
+    public static void saveFile(){
         ID = 0;
         String filePath = "data.txt";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
@@ -50,8 +51,9 @@ public class ViewAll extends javax.swing.JFrame {
             }
             System.out.println("File updated.");
         } catch (IOException e) {
-            System.err.println("An error occurred while writing to the file.");}
-        }
+            System.err.println("An error occurred while writing to the file.");
+            JOptionPane.showMessageDialog(null, "An error occurred while writing to the file", "Error", JOptionPane.ERROR_MESSAGE);}
+    }
     class ButtonEditor extends AbstractCellEditor implements TableCellEditor {
     private final JButton button;
     private int id;
@@ -179,6 +181,15 @@ public class ViewAll extends javax.swing.JFrame {
         Books.setToolTipText("Read");
         Books.setAutoscrolls(false);
         Books.setMaximumSize(new java.awt.Dimension(250, 0));
+        Books.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BooksMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BooksMouseExited(evt);
+                RowMouseEntered(evt);
+            }
+        });
         jScrollPane1.setViewportView(Books);
         if (Books.getColumnModel().getColumnCount() > 0) {
             Books.getColumnModel().getColumn(0).setResizable(false);
@@ -281,8 +292,8 @@ public class ViewAll extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void View_PopularityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_View_PopularityActionPerformed
-        ViewPopularity hp = new ViewPopularity();
-        hp.setVisible(true);
+        PopularityBarChart pbc = new PopularityBarChart();
+        pbc.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_View_PopularityActionPerformed
 
@@ -309,21 +320,35 @@ public class ViewAll extends javax.swing.JFrame {
         vwID.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_ViewByIDActionPerformed
-    
+
     private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
         Books.addMouseListener(new java.awt.event.MouseAdapter() {
         Color color = Books.getBackground();
+        @Override
         public void mouseEntered(java.awt.event.MouseEvent evt) {
         int row = Books.rowAtPoint(evt.getPoint());
         Books.setRowSelectionInterval(row, row);
         Books.setSelectionBackground(new Color(204,204,255));
         Books.setSelectionForeground(Color.BLACK);
         }
+        @Override
         public void mouseExited(java.awt.event.MouseEvent evt) {
         Books.setSelectionBackground(color);
         }
     });
     }//GEN-LAST:event_formMouseEntered
+
+    private void BooksMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BooksMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BooksMouseEntered
+
+    private void BooksMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BooksMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BooksMouseExited
+
+    private void RowMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RowMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RowMouseEntered
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

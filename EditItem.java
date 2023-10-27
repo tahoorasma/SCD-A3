@@ -36,9 +36,10 @@ public class EditItem extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(136, 185, 138));
 
-        backButton.setBackground(new java.awt.Color(0, 51, 51));
-        backButton.setForeground(new java.awt.Color(255, 255, 255));
-        backButton.setText("<");
+        backButton.setText("Back");
+        backButton.setMaximumSize(new java.awt.Dimension(72, 23));
+        backButton.setMinimumSize(new java.awt.Dimension(72, 23));
+        backButton.setPreferredSize(new java.awt.Dimension(72, 23));
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
@@ -115,9 +116,6 @@ public class EditItem extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Label)
@@ -138,7 +136,10 @@ public class EditItem extends javax.swing.JFrame {
                                     .addComponent(IDtf, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(111, 111, 111)
-                        .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(115, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -172,6 +173,8 @@ public class EditItem extends javax.swing.JFrame {
                 .addComponent(editButton)
                 .addContainerGap(81, Short.MAX_VALUE))
         );
+
+        backButton.getAccessibleContext().setAccessibleName("Back");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
